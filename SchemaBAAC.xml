@@ -1,0 +1,50 @@
+<Schema name="schemaBAAC_2026">
+  <Dimension type="StandardDimension" visible="true" name="Departement">
+    <Hierarchy name="GroupRegionDepartement" visible="true" hasAll="true" primaryKey="id_dim_dep">
+      <Table name="dim_dept" alias="">
+      </Table>
+      <Level name="group" visible="true" table="dim_dept" column="REGRGP_NOM" type="String" uniqueMembers="false" levelType="Regular">
+      </Level>
+      <Level name="region" visible="true" table="dim_dept" column="REG_NOM" type="String" uniqueMembers="false" levelType="Regular">
+      </Level>
+      <Level name="departement" visible="true" table="dim_dept" column="DEP_NOM" type="String" uniqueMembers="false" levelType="Regular">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="Temp">
+    <Hierarchy name="AnneeTrimestreMois" visible="true" hasAll="true" primaryKey="id_dim_date">
+      <Table name="dim_date" alias="">
+      </Table>
+      <Level name="Annee" visible="true" table="dim_date" column="annee" type="Integer" uniqueMembers="false" levelType="Regular">
+      </Level>
+      <Level name="Trimestre" visible="true" table="dim_date" column="trimester" type="String" uniqueMembers="false" levelType="Regular">
+      </Level>
+      <Level name="Mois" visible="true" table="dim_date" column="mois" type="String" uniqueMembers="false" levelType="Regular">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="ConsditionAtmos">
+    <Hierarchy name="Default" visible="true" hasAll="true" primaryKey="id_dim_condition_atmos">
+      <Table name="dim_condition_atmos" alias="">
+      </Table>
+      <Level name="atmos" visible="true" table="dim_condition_atmos" column="lib" type="String" uniqueMembers="false" levelType="Regular">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="SchemaBAAC" visible="true" cache="true" enabled="true">
+    <Table name="fait_accident">
+    </Table>
+    <DimensionUsage source="Departement" name="Departement" visible="true" foreignKey="id_dim_dep">
+    </DimensionUsage>
+    <DimensionUsage source="Temp" name="AnneeTrimestreMois" visible="true" foreignKey="id_dim_date">
+    </DimensionUsage>
+    <DimensionUsage source="ConsditionAtmos" name="ConditionAtmos" visible="true" foreignKey="id_dim_condition_atmos">
+    </DimensionUsage>
+    <Measure name="NbrDeces" column="nb_mort" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="NbreBlesse" column="nb_blesse_hostpalise" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="NbreIndemne" column="nb_indemne" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
